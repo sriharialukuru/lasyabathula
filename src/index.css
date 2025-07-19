@@ -2,41 +2,63 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
+/* Portfolio Design System - Dark theme with electric blue accents
 All colors MUST be HSL.
 */
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    /* Dark portfolio theme */
+    --background: 220 15% 8%;
+    --foreground: 210 20% 95%;
 
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    --card: 220 12% 12%;
+    --card-foreground: 210 20% 95%;
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    --popover: 220 12% 12%;
+    --popover-foreground: 210 20% 95%;
 
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
+    --primary: 195 100% 60%;
+    --primary-foreground: 220 15% 8%;
+    --primary-glow: 195 100% 70%;
 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    --secondary: 220 12% 18%;
+    --secondary-foreground: 210 20% 95%;
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    --muted: 220 12% 15%;
+    --muted-foreground: 210 10% 65%;
 
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    --accent: 155 90% 55%;
+    --accent-foreground: 220 15% 8%;
 
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 210 20% 95%;
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
+    --border: 220 12% 20%;
+    --input: 220 12% 15%;
+    --ring: 195 100% 60%;
 
-    --radius: 0.5rem;
+    --radius: 0.75rem;
+
+    /* Portfolio specific colors */
+    --electric-blue: 195 100% 60%;
+    --electric-green: 155 90% 55%;
+    --dark-surface: 220 12% 12%;
+    --darker-surface: 220 15% 8%;
+    
+    /* Gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(195 100% 60%), hsl(155 90% 55%));
+    --gradient-secondary: linear-gradient(180deg, hsl(220 12% 12%), hsl(220 15% 8%));
+    --gradient-hero: linear-gradient(135deg, hsl(220 15% 8%) 0%, hsl(220 12% 12%) 50%, hsl(220 15% 8%) 100%);
+    
+    /* Shadows */
+    --shadow-primary: 0 10px 40px -15px hsl(195 100% 60% / 0.3);
+    --shadow-secondary: 0 4px 20px -8px hsl(220 12% 5% / 0.4);
+    --shadow-glow: 0 0 30px hsl(195 100% 60% / 0.2);
+    
+    /* Animations */
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-bounce: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
 
     --sidebar-background: 0 0% 98%;
 
@@ -102,4 +124,114 @@ All colors MUST be HSL.
   body {
     @apply bg-background text-foreground;
   }
+}
+
+@layer components {
+  /* Hero button styles */
+  .hero-button {
+    @apply relative overflow-hidden transition-all duration-300;
+    background: var(--gradient-primary);
+    box-shadow: var(--shadow-primary);
+  }
+  
+  .hero-button:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-glow);
+  }
+  
+  .hero-button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+    transition: left 0.5s;
+  }
+  
+  .hero-button:hover::before {
+    left: 100%;
+  }
+
+  /* Section transitions */
+  .fade-in {
+    animation: fadeInUp 0.6s ease-out forwards;
+    opacity: 0;
+    transform: translateY(30px);
+  }
+
+  .floating-element {
+    animation: float 6s ease-in-out infinite;
+  }
+
+  /* Skill chip hover effect */
+  .skill-chip:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-primary);
+  }
+
+  /* Project card hover effect */
+  .project-card {
+    transition: var(--transition-smooth);
+    background: hsl(var(--card));
+    border: 1px solid hsl(var(--border));
+  }
+  
+  .project-card:hover {
+    transform: translateY(-8px);
+    box-shadow: var(--shadow-primary);
+    border-color: hsl(var(--primary));
+  }
+
+  /* Timeline styles */
+  .timeline-item::before {
+    content: '';
+    position: absolute;
+    left: -6px;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: hsl(var(--primary));
+  }
+
+  .timeline-dot {
+    position: absolute;
+    left: -10px;
+    top: 0;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: hsl(var(--primary));
+    box-shadow: 0 0 0 4px hsl(var(--background));
+  }
+}
+
+@layer utilities {
+  /* Gradient text */
+  .gradient-text {
+    background: var(--gradient-primary);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* Glass effect */
+  .glass {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+}
+
+@keyframes fadeInUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-20px); }
 }
